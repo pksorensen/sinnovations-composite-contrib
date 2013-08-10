@@ -1,6 +1,15 @@
 sinnovations-composite-contrib
 ==============================
 
+This repository will contains some resuable components for Composite C1. There wont be any frontend packages. 
+This is some utility extensions to easier integrate external stuff into C1.
+
+Some of the projects I have my eyes on right now that I want to integrate with C1 are all useing highly configurable solutions, that alow me to plugin my own data backend by exposing some repositories.
+Therefore I have created this MapperCache that takes care of generateing Lambda expression at runtime and caching them for auto mapping properties from C1 to clr classes with same name and type.
+When used on IQueryable, Expressions will be used instead of compiled delegates, meaning it dont need to fetch the holde database to do simple filtering.
+
+Below are some quick code snippets to get an idea what it can do.
+
 
 DATA
 ====
@@ -24,6 +33,20 @@ C1MappingRepository
 -------------------
 
 ```
+        public class MyCustomContentSpot
+        {
+            public MyCustomContentSpot()
+            {
+                PublicationStatus = "draft";
+            }
+            public string Content { get; set; }
+            public Guid Id { get; set; }
+            public string Title { get; set; }
+            public string PublicationStatus { get; set; }
+        }
+
+
+
         ///Create a Repository for the C1 Datatype ContentSpot and map it to MyCustomContentSpot
         var test = new C1Repository<ContentSpot, MyCustomContentSpot>();
         
